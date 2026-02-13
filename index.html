@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SeaStar ROV</title>
+
+    <style>
+      /*CSS CODE*/
+      :root {
+        /* Base (baby blue) */
+        /* --bg0:#b9dcf2; baby blue */
+        --bg0: #ffc5d3; /* my experiment*/
+        --bg1: #fff06292;
+        --bg2: #ffc2185b;
+
+        /* --bg1:#d9f1ff; lighter top haze */
+        /*  --water:#bfe6fb;  underwater tint */
+
+        /* Panel Definitions*/
+        --panel: rgba(255, 255, 255, 0.86); /* 1 -> solid, 0 -> invisible */
+        --panel2: rgba(255, 255, 255, 0.7); /* white that is colored in */
+        --border: #7aaed6; /* border around the white pannels*/
+        --border2: #cfe8ff; /* lighter blue than "border" and is used to layer borders to give depth*/
+
+        /* Text */
+        --text: ##0b2a3d;
+        --muted: #3f6f93; /*smaller text color*/
+
+        /*sunset vibe*/
+        --pink: #f0a6ca;
+        --pink2: #ffb8dc;
+        --purple: #9c89b8;
+        
+        /* Buttons */
+        --btn: #d9eefb;/* background of the buttons*/
+        --btnBorder: #9cc7eb; /*border around the buttons*/
+
+        /* Header */
+        --top: #2f74c0; /*blue bar at top*/
+        --top2: #1f5fa8; 
+
+        /* Shadows */
+        --shadow: 0 10px 26px rgba(0, 0, 0, 0.1); /*shadows around the panels*/
+      }
+
+      * {
+        box-sizing: border-box; 
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family:
+          Tahoma,
+          Verdana,
+          Segoe UI,
+          sans-serif;
+        color: var(--text);
+
+        /* ocean sky + gentle pink glow */
+        background:
+          radial-gradient(
+            1200px 650px at 18% 12%,
+            rgba(240, 166, 202, 0.22),
+            transparent 60% 
+          ),
+          radial-gradient(
+            1200px 650px at 85% 20%,
+            rgba(156, 137, 184, 0.18),
+            transparent 60%
+          ),
+          linear-gradient(180deg, var(--bg1), var(--bg0));
+      }
+
+      a {
+        color: #0b4f8a;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+
+      /* TOP BAR */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: linear-gradient(to bottom, var(--top), var(--top2));
+        border-bottom: 2px solid #174b86;
+      }
+      
+      .top {
+        max-width: 1400px;
+        margin: auto;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .brand {
+        color: #fff;
+        font-weight: 900;
+        font-size: 26px;  
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+      }
+      .star {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 30% 30%,
+          #fff,
+          rgba(255, 255, 255, 0.15)
+        );
+        box-shadow: 0 0 0 2px rgba(240, 166, 202, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+      }
+      nav {
+        margin-left: auto;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      nav a {
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.1);
+        font-size: 13px;
+      }
+      nav a:hover {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.35);
+      }
+
+      /* LAYOUT */
+      
+      .wrap { /*this affects the white panels and makes them smaller*/
+        max-width: 1100px; 
+        margin: auto; 
+        padding: 16px 12px 110px;
+        position: relative; 
+      }
+
+      /* this doesnt even work*/
+      .wrap::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 250px;
+        pointer-events: none;
+        z-index: 0;
+
+        /* Layered scene */
+        background:
+         /* this doesnt even workk either ugh */
+          radial-gradient(
+            circle at 50% 20%,
+            rgba(255, 255, 255, 0.65) 0 10px,
+            transparent 11px
+          ),
+          radial-gradient(
+            circle at 40% 40%,
+            rgba(255, 255, 255, 0.55) 0 6px,
+            transparent 7px
+          ),
+          radial-gradient(
+            circle at 58% 55%,
+            rgba(255, 255, 255, 0.5) 0 5px,
+            transparent 6px
+          ),
+         /*  nothing is working ugh!!!!! */
+            radial-gradient(
+              120px 90px at 86% 78%,
+              rgba(240, 166, 202, 0.95),
+              transparent 70%
+            ),
+          radial-gradient(
+            170px 110px at 92% 85%,
+            rgba(255, 184, 220, 0.92),
+            transparent 72%
+          ),
+          radial-gradient(
+            110px 80px at 78% 86%,
+            rgba(240, 166, 202, 0.78),
+            transparent 70%
+          ),
+           teal seaweed blobs (right/left) c
+            radial-gradient(
+              140px 90px at 82% 70%,
+              rgba(160, 235, 220, 0.55),
+              transparent 70%
+            ),
+          radial-gradient(
+            130px 80px at 12% 76%,
+            rgba(160, 235, 220, 0.45),
+            transparent 70%
+          ),
+         /*  whatever */
+          
+            radial-gradient(
+              60px 40px at 50% 92%,
+              rgba(240, 166, 202, 0.9),
+              transparent 70%
+            ),
+          
+          radial-gradient(
+            70px 45px at 58% 94%,
+            rgba(255, 184, 220, 0.88),
+            transparent 72%
+          ),
+          radial-gradient(
+            55px 35px at 40% 94%,
+            rgba(240, 166, 202, 0.8),
+            transparent 72%
+          );
+
+        border-radius: 20px;
+        opacity: 0.95;
+      }
+
+      /* Content above decor */
+      .content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 12px;
+      }
+
+      /* Panel card */
+      .box { /*this is the white panels*/
+        background: linear-gradient(180deg, var(--panel), var(--panel2)); /*this is the white panels*/
+        border: 2px solid var(--border); /*border around the white pannels*/
+        border-radius: 14px; /*rounded corners of the white panels*/
+        padding: 12px; /*space between the border and the text*/
+        box-shadow: var(--shadow); /*shadows around the panels*/
+        position: relative; 
+        overflow: hidden; 
+      }
+
+      /* Headings */
+      .box h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        color: #0b3e6b;
+        border-bottom: 1px solid #d6e7f6;
+        padding-bottom: 6px;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+        margin: 0;
+      }
+
+      /* Column spans for your exact layout */
+      .span6 {
+        grid-column: span 6;
+      }
+      .span12 {
+        grid-column: span 12;
+      }
+
+      /* Buttons */
+      .bigbtn {
+        width: 100%;
+        min-height: 56px;
+        border: 2px solid var(--btnBorder);
+        border-radius: 12px;
+        background: linear-gradient(
+          180deg,
+          rgba(217, 238, 251, 0.95),
+          rgba(217, 238, 251, 0.75)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 12px;
+        font-size: 14px;
+        color: #1c4f72;
+        cursor: pointer;
+      }
+      .bigbtn:hover {
+        filter: brightness(1.02);
+      }
+      .bigbtn:active {
+        transform: translateY(1px);
+      }
+
+      .btn-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* icon badge with pink highlight */
+      .icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(
+            circle at 35% 35%,
+            rgba(255, 255, 255, 0.75),
+            rgba(255, 255, 255, 0.28)
+          ),
+          linear-gradient(
+            180deg,
+            rgba(240, 166, 202, 0.3),
+            rgba(217, 238, 251, 0.55)
+          );
+        border: 1px solid rgba(240, 166, 202, 0.45);
+        color: #6e2a4d;
+        font-weight: 900;
+      }
+      .chev {
+        font-weight: 900;
+        color: #1f5fa8;
+        opacity: 0.75;
+        font-size: 18px;
+      }
+
+      /* User interface controller placeholder (simple, not SVG heavy) */
+      .controller {
+        margin-top: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 120px;
+      }
+
+      /* responsive */
+      @media (max-width: 900px) {
+        .span6 {
+          grid-column: span 12;
+        }
+        .wrap {
+          padding-bottom: 70px;
+        }
+        .wrap::after {
+          height: 180px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="top">
+        <div class="brand">
+          <span class="star" aria-hidden="true"></span>
+          SeaStar
+        </div>
+        <nav>
+          <a href="#github">GitHub</a>
+          <a href="#vlogs">Vlogs</a>
+          <a href="#about">About us</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <div class="content">
+        <div class="grid">
+          <!-- Camera Interface (top-left) -->
+          <section class="box span6">
+            <h2>Camera Footage</h2>
+
+            <button
+              class="bigbtn"
+              type="button"
+              onclick="alert('Later: embed underwater camera stream here')"
+            >
+              <span class="btn-left">
+                <span class="icon">📷</span>
+                Underwater Camera Feed
+              </span>
+              <span class="chev">›</span>
+            </button>
+
+            <p class="muted" style="margin-top: 10px">
+              Live video stream from the ROV 
+            </p>
+          </section>
+
+          <!-- More About the Project (top-right, tall) -->
+          <section class="box span6" style="grid-row: span 2">
+            <h2>More About the Project</h2>
+
+            <button
+              class="bigbtn"
+              type="button"
+              onclick="alert('Later: CAD, wiring diagrams, design decisions')"
+            >
+              <span class="btn-left">
+                <span class="icon">🛠</span>
+                Design Implementation
+              </span>
+              <span class="chev">›</span>
+            </button>
+
+            <button
+              class="bigbtn"
+              type="button"
+              style="margin-top: 10px"
+              onclick="alert('Later: professor / industry feedback')"
+            >
+              <span class="btn-left">
+                <span class="icon">💬</span>
+                Reviews & Feedback
+              </span>
+              <span class="chev">›</span>
+            </button>
+
+            <button
+              class="bigbtn"
+              type="button"
+              style="margin-top: 10px"
+              onclick="alert('Later: plots, tables, DO readings')"
+            >
+              <span class="btn-left">
+                <span class="icon">📊</span>
+                Results
+              </span>
+              <span class="chev">›</span>
+            </button>
+
+            <p class="muted" style="margin-top: 14px">
+              Design process, evaluation, and experimental outcomes
+            </p>
+          </section>
+
+          <!-- User Interface (bottom-left) -->
+          <section class="box span6">
+            <h2>User Interface</h2>
+
+            <button
+              class="bigbtn"
+              type="button"
+              onclick="window.location.href='ui.html'"
+            >
+              <span class="btn-left">
+                <span class="icon">🎮</span>
+                Open ROV Dashboard
+              </span>
+              <span class="chev">›</span>
+            </button>
+
+            <div class="controller" aria-hidden="true">
+              <div class="pad">
+                <div class="dpad"></div>
+                <div class="ab"></div>
+                <div class="stickL"></div>
+                <div class="stickR"></div>
+              </div>
+            </div>
+
+            <p class="muted" style="margin-top: 10px">
+              Control + telemetry page (local)
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
