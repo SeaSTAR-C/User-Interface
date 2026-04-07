@@ -154,6 +154,54 @@
     .wifi{width:18px; height:18px; color:rgba(232,238,247,.65);}
     .pill span{font-weight:750; color:rgba(232,238,247,.78)}
 
+     .state-btn{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
+        padding:10px 16px;
+        border-radius:12px;
+        border:1px solid rgba(255,255,255,.16);
+        background:rgba(255,255,255,.06);
+        color:rgba(232,238,247,.92);
+        box-shadow: var(--ring);
+        font-weight:800;
+        font-size:14px;
+        cursor:pointer;
+        transition: all .2s ease;
+      }
+      
+      .state-btn:hover{
+        transform: translateY(-1px);
+        box-shadow:
+          0 14px 35px rgba(42,167,255,.22),
+          0 0 30px rgba(42,167,255,.12);
+      }
+      
+      .state-boot{
+        border-color: rgba(255,204,57,.28);
+        background: rgba(255,204,57,.10);
+        color: rgba(255,204,57,.95);
+      }
+      
+      .state-idle{
+        border-color: rgba(176,119,255,.28);
+        background: rgba(176,119,255,.10);
+        color: rgba(210,185,255,.96);
+      }
+      
+      .state-mission{
+        border-color: rgba(30,227,138,.28);
+        background: rgba(30,227,138,.10);
+        color: rgba(30,227,138,.96);
+      }
+      
+      .topbar-right{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        flex-wrap:wrap;
+      }
     .grid{
       margin-top:16px;
       display:grid;
@@ -447,6 +495,9 @@
           </div>
         </div>
 
+      <div class="topbar-right">
+        <button class="state-btn state-boot" id="stateBtn">BOOT</button>
+          
         <div class="pill" id="connPill">
           <svg class="wifi" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M2 8.5C7.5 3.6 16.5 3.6 22 8.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
@@ -598,7 +649,15 @@
     } else {
       setTimeout(() => loginCode.focus(), 50);
     }
-
+        window.addEventListener("load", () => {
+        updateStateButton();
+  
+        const stateBtn = document.getElementById("stateBtn");
+        if (stateBtn){
+          stateBtn.addEventListener("click", cycleState);
+        }
+      });
+    
     function setText(id, value){
       const el = document.getElementById(id);
       if (el) el.textContent = value;
@@ -622,6 +681,32 @@
       }
     }
 
+        const states = ["BOOT", "IDLE", "MISSION MODE"];
+        let currentStateIndex = 0;
+
+        function updateStateButton(){
+          const stateBtn = document.getElementById("stateBtn");
+          if (!stateBtn) return;
+    
+          const currentState = states[currentStateIndex];
+          stateBtn.textContent = currentState;
+    
+          stateBtn.classList.remove("state-boot", "state-idle", "state-mission");
+    
+          if (currentState === "BOOT"){
+            stateBtn.classList.add("state-boot");
+          } else if (currentState === "IDLE"){
+            stateBtn.classList.add("state-idle");
+          } else if (currentState === "MISSION MODE"){
+            stateBtn.classList.add("state-mission");
+          }
+        }
+    
+        function cycleState(){
+          currentStateIndex = (currentStateIndex + 1) % states.length;
+          updateStateButton();
+        }
+    
     function startRos(){
       const PI_IP = "192.168.2.2";
       const ros = new ROSLIB.Ros({ url: "ws://192.168.2.2:9090" });
